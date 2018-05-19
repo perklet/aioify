@@ -1,4 +1,4 @@
-aiowrap
+aioify
 ======
 
 Make every function async and await-able.
@@ -6,13 +6,17 @@ Make every function async and await-able.
 Usage
 ------
 
+```
+pip install aioify
+```
+
 For example, make `os.path.exists` await-able.
 
 ```Python
 import os
-from aiowrap import aiowrap
+from aioify import aioify
 
-aios = aiowrap(os)
+aios = aioify(os)
 
 async def main():
     print(await aios.path.exists('/'))
