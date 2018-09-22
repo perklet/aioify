@@ -1,5 +1,6 @@
 import asyncio
 import inspect
+import types
 from functools import wraps, partial
 
 
@@ -16,15 +17,21 @@ def wrap(func):
     return run
 
 
-class Wrapper:
+class ClassWrapper:
     pass
 
 
-def aioify(obj):
+# noinspection PyUnresolvedReferences
+class ModuleWrapper(types.ModuleType):
+    pass
+
+
+def aioify(obj, name=None):
     if callable(obj):
         return wrap(obj)
     elif inspect.ismodule(obj) or inspect.isclass(obj):
-        wrapped_obj = Wrapper()
+        name = name or obj.__name__
+        wrapped_obj = ModuleWrapper(name) if inspect.ismodule(obj) else ClassWrapper()
         if getattr(obj, '__all__'):
             attrnames = obj.__all__
         else:
