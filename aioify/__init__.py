@@ -1,7 +1,7 @@
-import asyncio
-import inspect
-import types
 from functools import wraps, partial
+import asyncio
+
+import module_wrapper
 
 
 __all__ = ['aioify']
@@ -17,30 +17,15 @@ def wrap(func):
     return run
 
 
-class ClassWrapper:
-    pass
+def default_create_name_function(cls):
+    _ = cls
+    return 'create'
 
 
-# noinspection PyUnresolvedReferences
-class ModuleWrapper(types.ModuleType):
-    pass
+def aioify(obj, name=None, create_name_function=None):
+    create_name_function = create_name_function or default_create_name_function
 
+    def create(cls):
+        return create_name_function(cls=cls), wrap(func=cls)
 
-def aioify(obj, name=None):
-    if callable(obj):
-        return wrap(obj)
-    elif inspect.ismodule(obj) or inspect.isclass(obj):
-        name = name or obj.__name__
-        wrapped_obj = ModuleWrapper(name) if inspect.ismodule(obj) else ClassWrapper()
-        if getattr(obj, '__all__'):
-            attrnames = obj.__all__
-        else:
-            attrnames = dir(obj)
-        for attrname in attrnames:
-            if attrname.startswith('__'):
-                continue
-            original_obj = getattr(obj, attrname)
-            setattr(wrapped_obj, attrname, aioify(original_obj))
-        return wrapped_obj
-    else:
-        return obj
+    return module_wrapper.wrap(obj=obj, wrapper=wrap, methods_to_add={create}, name=name)
