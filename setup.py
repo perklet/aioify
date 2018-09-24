@@ -11,14 +11,14 @@ with open(os.path.join(here, 'README.md')) as f:
 setup(
     name = 'aioify',
     packages = ['aioify'],
-    version = '0.1.3',
+    version = '0.2.0',
     description = 'Make every python function async/await',
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     author = 'Yifei Kong',
     author_email = 'kongyifei@gmail.com',
     url = 'https://github.com/yifeikong/aioify',
-    download_url = 'https://github.com/yifeikong/aioify/archive/0.1.3.tar.gz',
+    download_url = 'https://github.com/yifeikong/aioify/archive/0.2.0.tar.gz',
     keywords = ['async', 'await', 'wrap'],
     classifiers = [
     'Development Status :: 3 - Alpha',
@@ -29,5 +29,7 @@ setup(
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     ],
-    python_requires='>=3.5'
+    python_requires='>=3.5',
+    install_requires = ['module-wrapper'],
+    package_data = {'aioify': ['py.typed']}
 )
