@@ -22,10 +22,10 @@ def default_create_name_function(cls):
     return 'create'
 
 
-def aioify(obj, name=None, create_name_function=None):
+def aioify(obj, name=None, create_name_function=None, skip=()):
     create_name_function = create_name_function or default_create_name_function
 
     def create(cls):
         return create_name_function(cls=cls), wrap(func=cls)
 
-    return module_wrapper.wrap(obj=obj, wrapper=wrap, methods_to_add={create}, name=name)
+    return module_wrapper.wrap(obj=obj, wrapper=wrap, methods_to_add={create}, name=name, skip=skip)
