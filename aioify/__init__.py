@@ -1,3 +1,4 @@
+import inspect
 from functools import wraps, partial
 import asyncio
 
@@ -26,6 +27,7 @@ def aioify(obj, name=None, create_name_function=None):
     create_name_function = create_name_function or default_create_name_function
 
     def create(cls):
-        return create_name_function(cls=cls), wrap(func=cls)
+        func = wrap(func=cls) if inspect.isclass(object=cls) else None
+        return create_name_function(cls=cls), func
 
     return module_wrapper.wrap(obj=obj, wrapper=wrap, methods_to_add={create}, name=name)
