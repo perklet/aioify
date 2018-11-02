@@ -1,6 +1,7 @@
 import inspect
 from functools import wraps, partial
 import asyncio
+import inspect
 
 import module_wrapper
 
@@ -15,7 +16,23 @@ def wrap(func):
             loop = asyncio.get_event_loop()
         pfunc = partial(func, *args, **kwargs)
         return await loop.run_in_executor(executor, pfunc)
-    return run
+
+    @wraps(func)
+    async def coroutine_run(*args, **kwargs):
+        _, _ = args, kwargs
+        return await func
+
+    @wraps(func)
+    async def coroutine_function_run(*args, **kwargs):
+        return await func(*args, **kwargs)
+
+    if inspect.iscoroutine(object=func):
+        result = coroutine_run
+    elif inspect.iscoroutinefunction(object=func):
+        result = coroutine_function_run
+    else:
+        result = run
+    return result
 
 
 def default_create_name_function(cls):
