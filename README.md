@@ -10,14 +10,14 @@ Usage
 pip install aioify
 ```
 
-For example, make `os.path.exists` await-able.
+For example, make `os`, `shutil` and user defined function await-able.
 
 ```Python
 #!/usr/bin/env python
 ###########
 # Warning #
 ###########
-# This code should be executed only on POSIX OS with at least 1 GiB free space in /tmp/ directory!
+# This code should be executed only on POSIX OS with at least 1 GiB free space in /tmp/ directory and RAM!
 
 from aioify import aioify
 import os
