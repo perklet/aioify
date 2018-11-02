@@ -1,28 +1,29 @@
-import inspect
 from functools import wraps, partial
 import asyncio
+import functools
 import inspect
 
 import module_wrapper
 
 
 __all__ = ['aioify']
+wrapper_assignments = tuple(x for x in functools.WRAPPER_ASSIGNMENTS if x != '__annotations__')
 
 
 def wrap(func):
-    @wraps(func)
+    @wraps(func, assigned=wrapper_assignments)
     async def run(*args, loop=None, executor=None, **kwargs):
         if loop is None:
             loop = asyncio.get_event_loop()
         pfunc = partial(func, *args, **kwargs)
         return await loop.run_in_executor(executor, pfunc)
 
-    @wraps(func)
+    @wraps(func, assigned=wrapper_assignments)
     async def coroutine_run(*args, **kwargs):
         _, _ = args, kwargs
         return await func
 
-    @wraps(func)
+    @wraps(func, assigned=wrapper_assignments)
     async def coroutine_function_run(*args, **kwargs):
         return await func(*args, **kwargs)
 
