@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aioify"
-version = "0.3.1"
+version = "0.3.2"
 description = "Make every Python function async/await"
 authors = ["Yifei Kong <kongyifei@gmail.com>", "Roman Inflianskas <infroma@gmail.com>"]
 license = "MIT"
