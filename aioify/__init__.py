@@ -27,9 +27,9 @@ def wrap(func):
     async def coroutine_function_run(*args, **kwargs):
         return await func(*args, **kwargs)
 
-    if inspect.iscoroutine(object=func):
+    if inspect.iscoroutine(func):
         result = coroutine_run
-    elif inspect.iscoroutinefunction(object=func):
+    elif inspect.iscoroutinefunction(func):
         result = coroutine_function_run
     else:
         result = run
