@@ -41,16 +41,19 @@ def default_create_name_function(cls):
     return 'create'
 
 
-def aioify(obj, name=None, create_name_function=None, skip=(), wrap_return_values=False):
+def aioify(obj, name=None, create_name_function=None, skip=(), wrap_return_values=False, wrapping_scope_regex=None):
     create_name_function = create_name_function or default_create_name_function
 
     def create(cls):
         func = wrap(func=cls) if inspect.isclass(object=cls) else None
         return create_name_function(cls=cls), func
 
-    return module_wrapper.wrap(obj=obj,
-                               wrapper=wrap,
-                               methods_to_add={create},
-                               name=name,
-                               skip=skip,
-                               wrap_return_values=wrap_return_values)
+    return module_wrapper.wrap(
+        obj=obj,
+        wrapper=wrap,
+        methods_to_add={create},
+        name=name,
+        skip=skip,
+        wrap_return_values=wrap_return_values,
+        wrapping_scope_regex=wrapping_scope_regex,
+    )

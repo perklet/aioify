@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aioify"
-version = "0.3.2"
+version = "0.4.0"
 description = "Make every Python function async/await"
 authors = ["Yifei Kong <kongyifei@gmail.com>", "Roman Inflianskas <infroma@gmail.com>"]
 license = "MIT"
@@ -14,7 +14,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.5"
-module-wrapper = "^0.2.3"
+module-wrapper = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 
