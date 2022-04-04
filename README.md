@@ -1,10 +1,23 @@
-aioify
-======
+aioify (maintenance mode)
+=========================
+
+Authors of aioify and module-wrapper decided to discontinue support of
+these libraries since the idea: "let's convert sync libraries to async
+ones" works only for some cases. Existing releases of libraries won't
+be removed, but don't expect any changes since today. Feel free to
+fork these libraries, however, we don't recommend using the automatic
+sync-to-async library conversion approach, as unreliable. Instead,
+it's better to run synchronous functions asynchronously using
+https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor
+or https://anyio.readthedocs.io/en/stable/api.html#running-code-in-worker-threads.
+
+Old documentation
+-----------------
 
 Make every function async and await-able.
 
 Usage
-------
+-----
 
 ```
 pip install aioify
